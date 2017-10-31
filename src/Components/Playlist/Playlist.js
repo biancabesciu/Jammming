@@ -15,11 +15,12 @@ class Playlist extends React.Component {
     render() {
         return(
             <div className="Playlist">
-                <input defaultValue={"New Playlist"}
+                <input defaultValue={this.props.name}
                        onChange={this.handleNameChange}
 
                 />
                 <TrackList tracks={this.props.playlistTracks}
+                           isRemoval = {true}
                            onAdd={this.props.onAdd}
                            onRemove={this.props.onRemove}
 

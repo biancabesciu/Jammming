@@ -8,7 +8,11 @@ import Spotify from '../../util/Spotify';
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {searchResults: [], playlistTracks: [], playlistName: 'New Playlist'};
+        this.state = {searchResults: [],
+            playlistTracks: [],
+            playlistName: 'New playlist'
+        };
+
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
         this.updatePlaylistName = this.updatePlaylistName.bind(this);
@@ -19,17 +23,20 @@ class App extends React.Component {
 
     addTrack(track) {
         let currentPlaylistArray = this.state.playlistTracks.concat(track);
-        this.setState({playlistTracks: currentPlaylistArray});
+        this.setState(
+            {playlistTracks: currentPlaylistArray
+            });
     }
 
     removeTrack(track) {
         let currentPlaylistArray = this.state.playlistTracks;
-        this.setState({playlistTracks: currentPlaylistArray})
-
+        this.setState(
+            {playlistTracks: currentPlaylistArray.filter(checkTrack => checkTrack.id !== track.id)
+            });
     }
 
     updatePlaylistName(name) {
-        this.setState({playlistName: name})
+        this.setState({playlistName: name});
     }
 
     savePlaylist() {
@@ -40,6 +47,7 @@ class App extends React.Component {
      }
 
      search(term) {
+        console.log(`Searching Spotify with ${term}`);
         Spotify.search(term).then(results => Array.from(results)).then(trackArray => {
             this.setState({searchResults: trackArray})
         });
