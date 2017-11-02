@@ -20,8 +20,10 @@ class Playlist extends React.Component {
             <div className="Playlist">
                 <input defaultValue={this.props.name}
                        onChange={this.handleNameChange}
+                       placeholder="Enter Playlist Name"
 
                 />
+
                 {/* pass the playlist tracks from the Playlist component
                 to the TrackList component */}
                 <TrackList tracks={this.props.playlistTracks}
