@@ -5,6 +5,7 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {term: ''};
+        //bind this.method to the current value of this
         this.search = this.search.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
     }

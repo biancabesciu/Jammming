@@ -5,9 +5,12 @@ import TrackList from '../TrackList/TrackList';
 class Playlist extends React.Component {
     constructor(props) {
         super(props);
+        //bind this.method to the current value of this
         this.handleNameChange = this.handleNameChange.bind(this);
     }
 
+    /* accept an event that is triggered by an onChange attribute
+       in the Playlist component's <input> element */
     handleNameChange(event) {
         this.props.onNameChange(event.target.value);
     }
@@ -19,6 +22,8 @@ class Playlist extends React.Component {
                        onChange={this.handleNameChange}
 
                 />
+                {/* pass the playlist tracks from the Playlist component
+                to the TrackList component */}
                 <TrackList tracks={this.props.playlistTracks}
                            isRemoval = {true}
                            onAdd={this.props.onAdd}

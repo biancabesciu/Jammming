@@ -5,6 +5,10 @@ const redirectUri = 'http://localhost:3000/';
 let userAccessToken = '';
 
 const Spotify = {
+    /* method accepts a search term input,
+       passes the search term value to a Spotify request,
+       then returns the response as a list of tracks in JSON format
+    */
     search: async function (term) {
         this.getUserAccessToken();
         let url = `https://api.spotify.com/v1/search?type=track&q=${term}`;
@@ -19,13 +23,7 @@ const Spotify = {
 
             if (response.ok) {
                 let jsonResponse = await response.json();
-                /*
-                    ID — returned as track.id
-                    Name — returned as track.name
-                    Artist — returned as track.artists[0].name
-                    Album — returned as track.album.name
-                    URI — returned as track.uri
-                */
+
                 let tracks = jsonResponse.tracks.items.map(track => {
                     return {
                         ID: track.id,
@@ -47,12 +45,19 @@ const Spotify = {
     savePlaylist: async function (name, tracks) {
         this.getUserAccessToken();
 
+        /* check if there are values saved to the method's name and tracks
+           if not, return*/
         if (!tracks || name === undefined) {
             return
         }
 
         try {
             // Get user info
+
+            /* request that returns the user's Spotify username
+               convert the response to JSON and
+               save the response to the userInfo variable
+            */
             let headers = { 'Authorization': 'Bearer ' + userAccessToken };
             let urlUserInfo = 'https://api.spotify.com/v1/me';
             let response = await fetch(urlUserInfo, { headers: headers });
@@ -77,7 +82,7 @@ const Spotify = {
             if (!response.ok) {
                 throw new Error('Fail to create playlist');
             }
-
+            
             let playlistInfo = await response.json();
             let playlistId = playlistInfo.id;
             const urlPlaylistTracks = `https://api.spotify.com/v1/users/${userInfo.id}/playlists/${playlistId}/tracks`;
@@ -96,17 +101,32 @@ const Spotify = {
 
     },
 
+    /* get a user's access token so that they can make requests to the Spotify API */
     getUserAccessToken: function () {
+        /* check if the user's access token is already set
+           if so, return the value saved to access token */
         if (userAccessToken) {
             return userAccessToken;
         }
+
+        /* if the access token and expiration time are in the URL,
+           implement the following steps:
+                *set the access token value
+                *set a variable for expiration time
+        */
         else if (window.location.href.match(/access_token=([^&]*)/) !== null) {
             userAccessToken = window.location.href.match(/access_token=([^&]*)/)[0].split("=")[1];
             let expiresIn = window.location.href.match(/expires_in=([^&]*)/)[0].split("=")[1];
 
+            /* set the access token to expire at the value for expiration time */
             window.setTimeout(() => userAccessToken = '', expiresIn * 1000);
+
+            /* clear the parameters from the URL,
+            so the app doesn't try grabbing the access token after it has expired */
             window.history.pushState('Access Token', null, '/');
+
         } else {
+            /* check the URL to see if it has just been obtained */
             const authUri = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
 
             console.log(authUri);
