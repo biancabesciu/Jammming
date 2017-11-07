@@ -27,18 +27,10 @@ class App extends React.Component {
 
     /* adding a song to the Playlist state */
     addTrack(track) {
-        let isOnTrack = false;
-        //check if the current song is in the playlistTracks state
-        this.state.playlistTracks.forEach(playlistTrack => {
-            if (playlistTrack.URI === track.URI) {
-                isOnTrack = true;
-            }
-        });
-
-        //if the id is new, add a song to the end of the playlist
-        if (!isOnTrack) {
-            this.state.playlistTracks.push(track);
-            this.setState({ playlistTracks: this.state.playlistTracks });
+        let tracks = this.state.playlistTracks;
+        if (!tracks.includes(track)) {
+            tracks.push(track);
+            this.setState({playlistTracks: tracks});
         }
     }
 
