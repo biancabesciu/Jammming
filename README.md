@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "Jammming", a React web application - second project of the Build Front-End Web Applications from Scratch course from Codecademy.
 
 A step by step project, built using React components, state, and requests with the Spotify API to build a website that allows users to search the Spotify library, create a custom playlist, then save it to their Spotify account..
@@ -13,3 +14,7 @@ Features:
  
 Resources given:
  - links to the HTML/CSS and visual assets; the HTML/CSS was not split into their components. 
+=======
+React web application using React components, state, and requests with the Spotify API to build a website that allows
+users to search the Spotify library, create a custom playlist, then save it to their Spotify account.
+>>>>>>> 11a00a2ad2d5cbe3251e55fe35f480e1826127aa
